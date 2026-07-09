@@ -68,6 +68,14 @@
     "title": "Coming Soon",
     "description": "This section is under construction. Check back soon!"
   },
+  "notFound": {
+    "eyebrow": "Error · Card Not Found",
+    "code": "404",
+    "title": "This card isn't in the codex",
+    "description": "The page you're looking for has been banished to the Graveyard, moved, or never existed.",
+    "cta": "Back to Home",
+    "ctaSearch": "Browse Showcase"
+  },
   "banlist": {
     "title": "Banlist",
     "alert": "Banlist · Jul 2026",

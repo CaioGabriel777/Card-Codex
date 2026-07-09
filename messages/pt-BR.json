@@ -68,6 +68,14 @@
     "title": "Em breve",
     "description": "Esta seção está sendo construída. Volte em breve!"
   },
+  "notFound": {
+    "eyebrow": "Erro · Carta Não Encontrada",
+    "code": "404",
+    "title": "Esta carta não está no codex",
+    "description": "A página que você procura foi banida para o Cemitério, movida ou nunca existiu.",
+    "cta": "Voltar ao Início",
+    "ctaSearch": "Explorar Vitrine"
+  },
   "banlist": {
     "title": "Banlist",
     "alert": "Banlist · Jul 2026",
