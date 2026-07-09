@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Duel Disk",
+    "tagline": "Catálogo de Cartas",
+    "description": "Catálogo completo de cartas Yu-Gi-Oh! com rulings e informações detalhadas."
+  },
+  "nav": {
+    "showcase": "Vitrine",
+    "collection": "Coleção",
+    "banlist": "Banlist",
+    "login": "Entrar"
+  },
+  "search": {
+    "placeholder": "Buscar carta ou coleção...",
+    "noResults": "Nenhuma carta encontrada"
+  },
+  "home": {
+    "heroTitle": "O catálogo definitivo de cartas Yu-Gi-Oh!",
+    "heroSubtitle": "Rulings detalhados e informações completas de mais de 12.000 cartas.",
+    "searchPlaceholder": "Buscar uma carta...",
+    "ctaShowcase": "Explorar Vitrine",
+    "ctaDetail": "Ver Coleção",
+    "statsCount": "{count}+ cartas catalogadas",
+    "statsLocales": "PT-BR · EN · 日本語",
+    "statsLive": "Preços e rulings atualizados",
+    "featuredTitle": "Cartas em Destaque",
+    "featuredViewAll": "Ver vitrine completa →",
+    "linksTitle": "Explore o Catálogo",
+    "linkShowcaseDesc": "Navegue pelos destaques e cartas em alta.",
+    "linkCollectionDesc": "Acompanhe cada carta da sua coleção pessoal.",
+    "linkBanlistDesc": "Fique por dentro das atualizações da Banlist."
+  },
+  "showcase": {
+    "title": "Zona de Destaque",
+    "cardCount": "{count} de {total} cartas",
+    "empty": "Nenhuma carta encontrada.",
+    "tabs": {
+      "popular": "Mais populares",
+      "recent": "Lançamentos",
+      "meta": "Meta atual"
+    },
+    "filters": {
+      "title": "Filtros",
+      "type": "Tipo",
+      "monster": "Monstro",
+      "spell": "Magia",
+      "trap": "Armadilha",
+      "rarity": "Raridade"
+    }
+  },
+  "card": {
+    "backToShowcase": "← voltar para a vitrine",
+    "effectLabel": "texto do efeito:",
+    "releaseDate": "lançamento: {date}",
+    "hoverHint": "passe o mouse — inclinação holográfica ativa",
+    "rulings": "Rulings",
+    "relatedCards": "Cartas Relacionadas",
+    "archetype": "arquétipo {name}",
+    "decksUsing": "Decks onde aparece",
+    "deckName": "Deck",
+    "copies": "Cópias",
+    "copiesCount": "{count} cópias",
+    "inclusion": "Inclusão",
+    "noRulings": "Sem rulings oficiais.",
+    "level": "Nível",
+    "attribute": "Atributo"
+  },
+  "placeholder": {
+    "title": "Em breve",
+    "description": "Esta seção está sendo construída. Volte em breve!"
+  },
+  "banlist": {
+    "title": "Banlist",
+    "alert": "Banlist · Jul 2026",
+    "alertMessage": "{count} cartas do seu inventário foram limitadas na atualização de julho.",
+    "alertLink": "Ver mudanças →"
+  }
+}

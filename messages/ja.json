@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Duel Disk",
+    "tagline": "カードカタログ",
+    "description": "遊戯王カードの完全なカタログ。裁定、詳細情報を掲載。"
+  },
+  "nav": {
+    "showcase": "ショーケース",
+    "collection": "コレクション",
+    "banlist": "禁止・制限リスト",
+    "login": "ログイン"
+  },
+  "search": {
+    "placeholder": "カード、セットを検索...",
+    "noResults": "カードが見つかりません"
+  },
+  "home": {
+    "heroTitle": "究極の遊戯王カードカタログ",
+    "heroSubtitle": "12,000枚以上のカードの詳細な裁定と完全な情報。",
+    "searchPlaceholder": "カードを検索...",
+    "ctaShowcase": "ショーケースを見る",
+    "ctaDetail": "コレクションを見る",
+    "statsCount": "{count}枚以上のカードを収録",
+    "statsLocales": "EN · 日本語 · PT-BR",
+    "statsLive": "価格・裁定をリアルタイム更新",
+    "featuredTitle": "注目のカード",
+    "featuredViewAll": "ショーケース全体を見る →",
+    "linksTitle": "カタログを探索",
+    "linkShowcaseDesc": "厳選されたハイライトと人気カードをご覧ください。",
+    "linkCollectionDesc": "自分のコレクションのカードをすべて管理。",
+    "linkBanlistDesc": "最新の禁止・制限リストの更新を確認。"
+  },
+  "showcase": {
+    "title": "注目ゾーン",
+    "cardCount": "{total}枚中{count}枚",
+    "empty": "カードが見つかりません。",
+    "tabs": {
+      "popular": "人気",
+      "recent": "新着",
+      "meta": "メタ"
+    },
+    "filters": {
+      "title": "フィルター",
+      "type": "タイプ",
+      "monster": "モンスター",
+      "spell": "魔法",
+      "trap": "罠",
+      "rarity": "レアリティ"
+    }
+  },
+  "card": {
+    "backToShowcase": "← ショーケースに戻る",
+    "effectLabel": "効果テキスト：",
+    "releaseDate": "発売日：{date}",
+    "hoverHint": "ホバー — ホログラフィック傾斜有効",
+    "rulings": "裁定",
+    "relatedCards": "関連カード",
+    "archetype": "アーキタイプ {name}",
+    "decksUsing": "このカードを使用するデッキ",
+    "deckName": "デッキ",
+    "copies": "枚数",
+    "copiesCount": "{count}枚",
+    "inclusion": "採用率",
+    "noRulings": "公式裁定はありません。",
+    "level": "レベル",
+    "attribute": "属性"
+  },
+  "placeholder": {
+    "title": "近日公開",
+    "description": "このセクションは現在構築中です。後でもう一度チェックしてください！"
+  },
+  "banlist": {
+    "title": "禁止・制限リスト",
+    "alert": "禁止・制限リスト · 2026年7月",
+    "alertMessage": "7月の更新で{count}枚のカードが制限されました。",
+    "alertLink": "変更を見る →"
+  }
+}

@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A Yu-Gi-Oh! trading card with multilingual data.
+model Card {
+  id            String   @id @default(cuid())
+  ygoprodeckId  Int      @unique
+  slug          String   @unique
+  nameEn        String
+  namePt        String?
+  nameJa        String?
+  descEn        String   @db.Text
+  descPt        String?  @db.Text
+  descJa        String?  @db.Text
+  type          String          // e.g. "Effect Monster", "Spell Card"
+  race          String          // e.g. "Dragon", "Warrior"
+  attribute     String?         // e.g. "LIGHT", "DARK"
+  atk           Int?
+  def           Int?
+  level         Int?
+  archetype     String?
+  rarity        String   @default("Common") // e.g. "Ultra Rare", "Secret Rare"
+  imageUrl      String
+  imageSmallUrl String?
+  cardSetCode   String?
+  releaseDate   DateTime?
+  lastSyncedAt  DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  rulings       Ruling[]
+  deckUsages    DeckUsage[]
+
+  @@index([archetype])
+  @@index([type])
+  @@index([rarity])
+}
+
+/// A ruling or clarification for a specific card.
+model Ruling {
+  id     String @id @default(cuid())
+  cardId String
+  index  Int
+  textEn String @db.Text
+  textPt String? @db.Text
+  source String @default("community") // "community" | "ygorganization" | "official"
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([cardId, index])
+}
+
+/// Aggregation of deck inclusion data for a card.
+model DeckUsage {
+  id               String @id @default(cuid())
+  cardId           String
+  deckName         String
+  copies           Int    @default(3)
+  inclusionPercent Float  // 0-100
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([cardId, deckName])
+}

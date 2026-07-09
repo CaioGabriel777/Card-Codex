@@ -1,0 +1,27 @@
+import { defineRouting } from 'next-intl/routing';
+
+export const routing = defineRouting({
+  locales: ['en', 'ja', 'pt-BR'],
+  defaultLocale: 'en',
+  pathnames: {
+    '/': '/',
+    '/showcase': {
+      en: '/showcase',
+      ja: '/showcase',
+      'pt-BR': '/vitrine',
+    },
+    '/card/[slug]': {
+      en: '/card/[slug]',
+      ja: '/card/[slug]',
+      'pt-BR': '/carta/[slug]',
+    },
+    '/collection': {
+      en: '/collection',
+      ja: '/collection',
+      'pt-BR': '/colecao',
+    },
+    '/banlist': '/banlist',
+  },
+});
+
+export type Locale = (typeof routing.locales)[number];

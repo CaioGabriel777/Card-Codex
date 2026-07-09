@@ -1,0 +1,48 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: duel-disk-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Points at the `db` service, not `.env`'s localhost URL (which is only
+      # correct for running Next.js outside Docker).
+      - DATABASE_URL=postgresql://dueldisk:dueldisk123@db:5432/dueldisk?schema=public
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Bind-mount the source so file edits on the host reach the container's
+      # `next dev` file watcher for hot reload.
+      - .:/app
+      # Anonymous volumes so the host's node_modules/.next (built for Windows)
+      # never shadow the Linux ones generated inside the image.
+      - /app/node_modules
+      - /app/.next
+    command: sh -c "npx prisma db push && npx tsx prisma/seed.ts && npm run dev"
+
+  db:
+    image: postgres:16-alpine
+    container_name: duel-disk-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dueldisk
+      POSTGRES_PASSWORD: dueldisk123
+      POSTGRES_DB: dueldisk
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dueldisk -d dueldisk"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

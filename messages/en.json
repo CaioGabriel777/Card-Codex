@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Duel Disk",
+    "tagline": "Card Catalog",
+    "description": "Complete Yu-Gi-Oh! card catalog with rulings and detailed information."
+  },
+  "nav": {
+    "showcase": "Showcase",
+    "collection": "Collection",
+    "banlist": "Banlist",
+    "login": "Sign In"
+  },
+  "search": {
+    "placeholder": "Search cards or sets...",
+    "noResults": "No cards found"
+  },
+  "home": {
+    "heroTitle": "The definitive Yu-Gi-Oh! card catalog",
+    "heroSubtitle": "Detailed rulings and complete information on over 12,000 cards.",
+    "searchPlaceholder": "Search for a card...",
+    "ctaShowcase": "Browse Showcase",
+    "ctaDetail": "View Collection",
+    "statsCount": "{count}+ cards cataloged",
+    "statsLocales": "EN · 日本語 · PT-BR",
+    "statsLive": "Live pricing & rulings",
+    "featuredTitle": "Featured Cards",
+    "featuredViewAll": "View full showcase →",
+    "linksTitle": "Explore the Catalog",
+    "linkShowcaseDesc": "Browse curated highlights and trending cards.",
+    "linkCollectionDesc": "Track every card across your personal collection.",
+    "linkBanlistDesc": "Stay current with the latest Forbidden & Limited updates."
+  },
+  "showcase": {
+    "title": "Featured Zone",
+    "cardCount": "{count} of {total} cards",
+    "empty": "No cards found.",
+    "tabs": {
+      "popular": "Most popular",
+      "recent": "New releases",
+      "meta": "Current meta"
+    },
+    "filters": {
+      "title": "Filters",
+      "type": "Type",
+      "monster": "Monster",
+      "spell": "Spell",
+      "trap": "Trap",
+      "rarity": "Rarity"
+    }
+  },
+  "card": {
+    "backToShowcase": "← back to showcase",
+    "effectLabel": "effect text:",
+    "releaseDate": "released: {date}",
+    "hoverHint": "hover — holographic tilt active",
+    "rulings": "Rulings",
+    "relatedCards": "Related Cards",
+    "archetype": "archetype {name}",
+    "decksUsing": "Decks using this card",
+    "deckName": "Deck",
+    "copies": "Copies",
+    "copiesCount": "{count} copies",
+    "inclusion": "Inclusion",
+    "noRulings": "No official rulings.",
+    "level": "Level",
+    "attribute": "Attribute"
+  },
+  "placeholder": {
+    "title": "Coming Soon",
+    "description": "This section is under construction. Check back soon!"
+  },
+  "banlist": {
+    "title": "Banlist",
+    "alert": "Banlist · Jul 2026",
+    "alertMessage": "{count} cards from your inventory were limited in the July update.",
+    "alertLink": "View changes →"
+  }
+}
