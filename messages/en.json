@@ -44,8 +44,7 @@
       "type": "Type",
       "monster": "Monster",
       "spell": "Spell",
-      "trap": "Trap",
-      "rarity": "Rarity"
+      "trap": "Trap"
     }
   },
   "card": {
@@ -74,5 +73,9 @@
     "alert": "Banlist · Jul 2026",
     "alertMessage": "{count} cards from your inventory were limited in the July update.",
     "alertLink": "View changes →"
+  },
+  "footer": {
+    "disclaimer": "Unofficial fan project. Yu-Gi-Oh! is a trademark of Konami.",
+    "openSource": "Open source on GitHub"
   }
 }

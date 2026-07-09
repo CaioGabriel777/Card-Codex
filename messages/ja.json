@@ -44,8 +44,7 @@
       "type": "タイプ",
       "monster": "モンスター",
       "spell": "魔法",
-      "trap": "罠",
-      "rarity": "レアリティ"
+      "trap": "罠"
     }
   },
   "card": {
@@ -74,5 +73,9 @@
     "alert": "禁止・制限リスト · 2026年7月",
     "alertMessage": "7月の更新で{count}枚のカードが制限されました。",
     "alertLink": "変更を見る →"
+  },
+  "footer": {
+    "disclaimer": "非公式のファンプロジェクトです。遊戯王はコナミの商標です。",
+    "openSource": "GitHubでオープンソース公開中"
   }
 }

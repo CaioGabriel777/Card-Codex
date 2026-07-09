@@ -25,7 +25,7 @@ Duel Disk is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, 
 - **Interactive Card Showcase:** Premium UI with holographic tilt effects (`CardTilt`) for an immersive experience.
 - **Instant Card Search:** Debounced typeahead in the header and homepage — start typing a card name (in any supported language) and matching cards appear with a thumbnail preview.
 - **Detailed Card Information:** Access complete stats, effects, pricing history, and community rulings.
-- **Working Showcase Filters:** Filter by card type and rarity, combinable with a full-text search query, all reflected in the URL.
+- **Working Showcase Filters:** Filter by card type, combinable with a full-text search query, all reflected in the URL.
 - **Internationalization (i18n):** Full support for English (default), Japanese, and Portuguese (pt-BR) locales, with localized routes per language.
 - **Automated Data Sync:** Integrates with YGOPRODeck API utilizing a Stale-While-Revalidate pattern for up-to-date pricing and data.
 - **Dockerized Environment:** Fully containerized setup ensuring reproducible builds and a smooth developer experience.
@@ -38,7 +38,7 @@ This project is built using modern web development standards and technologies:
 - **[Tailwind CSS v3](https://tailwindcss.com/)** - Utility-first styling
 - **[Prisma ORM](https://www.prisma.io/)** - Type-safe database interactions
 - **PostgreSQL** - Relational database
-- **[next-intl](https://next-intl.dev/)** - Internationalization and localized routingov
+- **[next-intl](https://next-intl.dev/)** - Internationalization and localized routing
 
 ## 🚀 Getting Started
 

@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -25,12 +26,13 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
-      <body>
+      <body className="flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main style={{ paddingTop: 'var(--header-height)' }}>
+          <main className="flex-1" style={{ paddingTop: 'var(--header-height)' }}>
             {children}
           </main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

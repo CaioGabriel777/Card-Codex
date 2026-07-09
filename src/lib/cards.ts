@@ -29,7 +29,6 @@ export async function getCardBySlug(slug: string) {
  */
 export async function getCards(options?: {
   type?: string | string[];
-  rarity?: string | string[];
   archetype?: string;
   search?: string;
   sortBy?: 'name' | 'recent';
@@ -38,7 +37,6 @@ export async function getCards(options?: {
 }) {
   const {
     type,
-    rarity,
     archetype,
     search,
     sortBy = 'name',
@@ -47,16 +45,12 @@ export async function getCards(options?: {
   } = options ?? {};
 
   const types = Array.isArray(type) ? type.filter(Boolean) : type ? [type] : [];
-  const rarities = Array.isArray(rarity) ? rarity.filter(Boolean) : rarity ? [rarity] : [];
 
   // Each filter group is an OR of its own options; groups combine with AND.
   const and: any[] = [];
 
   if (types.length) {
     and.push({ OR: types.map((t) => ({ type: { contains: t, mode: 'insensitive' } })) });
-  }
-  if (rarities.length) {
-    and.push({ rarity: { in: rarities } });
   }
   if (archetype) and.push({ archetype: { equals: archetype, mode: 'insensitive' } });
   if (search) {

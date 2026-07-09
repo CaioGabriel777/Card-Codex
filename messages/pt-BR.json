@@ -44,8 +44,7 @@
       "type": "Tipo",
       "monster": "Monstro",
       "spell": "Magia",
-      "trap": "Armadilha",
-      "rarity": "Raridade"
+      "trap": "Armadilha"
     }
   },
   "card": {
@@ -74,5 +73,9 @@
     "alert": "Banlist · Jul 2026",
     "alertMessage": "{count} cartas do seu inventário foram limitadas na atualização de julho.",
     "alertLink": "Ver mudanças →"
+  },
+  "footer": {
+    "disclaimer": "Projeto de fã não oficial. Yu-Gi-Oh! é uma marca registrada da Konami.",
+    "openSource": "Código aberto no GitHub"
   }
 }

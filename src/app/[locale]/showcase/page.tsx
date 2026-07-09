@@ -3,7 +3,6 @@ import { Link } from '@/i18n/navigation';
 import { getCards } from '@/lib/cards';
 import CardPreview from '@/components/card/CardPreview';
 import ShowcaseFilters from '@/components/showcase/ShowcaseFilters';
-import { getRarityConfig } from '@/lib/rarity-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +13,7 @@ export default async function ShowcasePage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { locale } = await params;
+  await params;
   const search = await searchParams;
   const t = await getTranslations('showcase');
   const tNav = await getTranslations('nav');
@@ -23,20 +22,15 @@ export default async function ShowcasePage({
   // Parse search params for filters
   const page = Number(search.page) || 1;
   const types = typeof search.type === 'string' ? search.type.split(',').filter(Boolean) : [];
-  const rarities = typeof search.rarity === 'string' ? search.rarity.split(',').filter(Boolean) : [];
   const query = typeof search.q === 'string' ? search.q : undefined;
 
-  const { cards, total } = await getCards({ page, type: types, rarity: rarities, search: query, pageSize: 9 });
+  const { cards, total } = await getCards({ page, type: types, search: query, pageSize: 9 });
 
   const typeOptions = [
     { value: 'Monster', label: t('filters.monster') },
     { value: 'Spell', label: t('filters.spell') },
     { value: 'Trap', label: t('filters.trap') },
   ];
-  const rarityOptions = ['Common', 'Rare', 'Ultra Rare', 'Secret Rare'].map((value) => ({
-    value,
-    label: getRarityConfig(value).label[locale as 'en' | 'pt-BR' | 'ja'],
-  }));
 
   // Nav links for the left sidebar
   const navLinks = [
@@ -72,8 +66,6 @@ export default async function ShowcasePage({
           filtersTitle={t('filters.title')}
           typeLabel={t('filters.type')}
           typeOptions={typeOptions}
-          rarityLabel={t('filters.rarity')}
-          rarityOptions={rarityOptions}
         />
       </aside>
 
