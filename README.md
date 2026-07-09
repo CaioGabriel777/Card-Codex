@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 align="center">Duel Disk</h1>
+  <h1 align="center">CardCodex</h1>
   <p align="center">
     A modern Yu-Gi-Oh! card catalog and showcase application built with Next.js and Prisma.
   </p>
@@ -8,15 +8,15 @@
 <br />
 
 <p align="center">
-  <img src="public/showcase.png" alt="Duel Disk showcase page" width="100%" />
+  <img src="public/showcase.png" alt="CardCodex showcase page" width="100%" />
 </p>
 <p align="center">
-  <img src="public/obelisk-the-tormentor.png" alt="Duel Disk card detail page" width="100%" />
+  <img src="public/obelisk-the-tormentor.png" alt="CardCodex card detail page" width="100%" />
 </p>
 
 ## 🌟 About The Project
 
-Duel Disk is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, interactive experience for collectors and players. It features detailed card showcases, a premium holographic tilt effect for card previews, rulings, related cards, and deck usage statistics. The application is fully localized (i18n), with English as the default locale alongside Japanese and Portuguese (pt-BR) — including per-locale routes (e.g. `/en/showcase` vs `/pt-BR/vitrine`) for better SEO.
+CardCodex is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, interactive experience for collectors and players. It features detailed card showcases, a premium holographic tilt effect for card previews, rulings, related cards, and deck usage statistics. The application is fully localized (i18n), with English as the default locale alongside Japanese and Portuguese (pt-BR) — including per-locale routes (e.g. `/en/showcase` vs `/pt-BR/vitrine`) for better SEO.
 
 > **Disclaimer:** This is an unofficial fan project. Yu-Gi-Oh! is a trademark of Konami. Card data and images are sourced live from the [YGOPRODeck API](https://ygoprodeck.com/api-guide/) and are neither redistributed nor stored as static assets in this repository.
 
@@ -54,8 +54,8 @@ This is the recommended approach as it ensures all dependencies (like PostgreSQL
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/CaioGabriel777/Duel-Disk.git
-   cd Duel-Disk
+   git clone https://github.com/CaioGabriel777/Card-Codex.git
+   cd Card-Codex
    ```
 
 2. Copy the environment variables example file

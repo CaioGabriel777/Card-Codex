@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-const GITHUB_URL = 'https://github.com/CaioGabriel777/Duel-Disk';
+const GITHUB_URL = 'https://github.com/CaioGabriel777/Card-Codex';
 
 /**
  * Site footer with branding, disclaimer and a link to the open-source repo.
@@ -13,8 +13,8 @@ export default async function Footer() {
       <div className="container-max py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
         <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
           <span className="font-display font-bold text-sm tracking-[0.15em]">
-            <span className="text-brand-text">DUEL</span>{' '}
-            <span className="text-brand-gold">DISK</span>
+            <span className="text-brand-text">CARD</span>{' '}
+            <span className="text-brand-gold">CODEX</span>
           </span>
           <span className="font-mono text-[0.7rem] text-brand-text-dim">
             © {new Date().getFullYear()} · {t('disclaimer')}

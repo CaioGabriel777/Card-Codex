@@ -24,8 +24,8 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 h-[60px] bg-brand-bg border-b border-brand-border">
       <div className="container-max h-full flex items-center gap-8">
         <Link href="/" className="flex items-baseline gap-1.5 no-underline whitespace-nowrap">
-          <span className="font-display text-[1.3rem] font-bold text-brand-text tracking-[0.15em]">DUEL</span>
-          <span className="font-display text-[1.3rem] font-bold text-brand-gold tracking-[0.15em]">DISK</span>
+          <span className="font-display text-[1.3rem] font-bold text-brand-text tracking-[0.15em]">CARD</span>
+          <span className="font-display text-[1.3rem] font-bold text-brand-gold tracking-[0.15em]">CODEX</span>
           <span className="font-mono text-[0.65rem] text-brand-text-dim tracking-[0.15em] uppercase ml-2 hidden sm:inline">
             {t('site.tagline')}
           </span>

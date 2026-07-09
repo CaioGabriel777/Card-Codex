@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Duel Disk — Yu-Gi-Oh! Card Catalog', template: '%s | Duel Disk' },
+  title: { default: 'CardCodex — Yu-Gi-Oh! Card Catalog', template: '%s | CardCodex' },
   description: 'Complete Yu-Gi-Oh! card catalog with rulings and detailed information.',
 };
 
