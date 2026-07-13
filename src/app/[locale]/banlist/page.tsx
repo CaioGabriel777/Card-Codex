@@ -6,6 +6,7 @@ import { getBanlist } from '@/lib/cards';
 import { buildTypeGroups } from '@/lib/typeGroups';
 import CardPreview from '@/components/card/CardPreview';
 import CatalogFilters from '@/components/shared/CatalogFilters';
+import SectionNav from '@/components/shared/SectionNav';
 
 // Matches the getBanlist() unstable_cache revalidate — Konami updates the
 // banlist a handful of times a year, not something that needs per-request freshness.
@@ -86,6 +87,7 @@ export default async function BanlistPage({
     { href: '/showcase' as const, label: tNav('showcase'), active: false },
     { href: '/collection' as const, label: tNav('collection'), active: false },
     { href: '/banlist' as const, label: tNav('banlist'), active: true },
+    { href: '/decks' as const, label: tNav('decks'), active: false },
   ];
 
   const sections = [
@@ -98,21 +100,7 @@ export default async function BanlistPage({
     <div className="container-max py-8 grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8">
       {/* Left Sidebar: Navigation + Filters */}
       <aside className="hidden lg:block space-y-8">
-        <nav className="space-y-0">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`block px-4 py-2.5 text-sm font-body no-underline transition-colors ${
-                link.active
-                  ? 'bg-brand-gold/10 text-brand-gold border-l-2 border-brand-gold font-semibold'
-                  : 'text-brand-text-dim hover:text-brand-text hover:bg-brand-surface/50 border-l-2 border-transparent'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <SectionNav links={navLinks} />
 
         <CatalogFilters
           filtersTitle={tFilters('title')}

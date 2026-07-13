@@ -39,6 +39,7 @@ model Card {
 
   rulings       Ruling[]
   deckUsages    DeckUsage[]
+  animeDeckCards AnimeDeckCard[]
 
   @@index([archetype])
   @@index([type])
@@ -73,4 +74,40 @@ model DeckUsage {
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 
   @@unique([cardId, deckName])
+}
+
+/// A curated decklist used by an anime character during a specific season/arc.
+/// Hand-curated editorial content — there's no API source for this, unlike Card.
+model AnimeDeck {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  character     String                          // e.g. "Yugi Muto"
+  series        String   @default("Yu-Gi-Oh! Duel Monsters")
+  season        String                          // e.g. "Season 1: Duelist Kingdom"
+  titleEn       String
+  titlePt       String?
+  titleJa       String?
+  descriptionEn String   @db.Text
+  descriptionPt String?  @db.Text
+  descriptionJa String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  cards AnimeDeckCard[]
+
+  @@index([character])
+}
+
+/// A single card entry within an anime deck.
+model AnimeDeckCard {
+  id       String @id @default(cuid())
+  deckId   String
+  cardId   String
+  category String @default("Main") // "Main" | "Extra" (Fusion/Synchro/etc.)
+  copies   Int    @default(1)
+
+  deck AnimeDeck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  card Card      @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([deckId, cardId])
 }

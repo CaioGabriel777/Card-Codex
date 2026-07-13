@@ -8,6 +8,7 @@
     "showcase": "Vitrine",
     "collection": "Coleção",
     "banlist": "Banlist",
+    "decks": "Decks do Anime",
     "login": "Entrar"
   },
   "search": {
@@ -28,7 +29,8 @@
     "linksTitle": "Explore o Catálogo",
     "linkShowcaseDesc": "Navegue pelos destaques e cartas em alta.",
     "linkCollectionDesc": "Acompanhe cada carta da sua coleção pessoal.",
-    "linkBanlistDesc": "Fique por dentro das atualizações da Banlist."
+    "linkBanlistDesc": "Fique por dentro das atualizações da Banlist.",
+    "linkDecksDesc": "Reviva os decks que os personagens icônicos usaram ao longo do anime."
   },
   "filters": {
     "title": "Filtros",
@@ -115,6 +117,17 @@
     "alert": "Banlist",
     "alertMessage": "{count} cartas estão atualmente Proibidas ou Limitadas no TCG.",
     "alertLink": "Ver Banlist →"
+  },
+  "decks": {
+    "title": "Decks do Anime",
+    "subtitle": "Decklists selecionadas usadas por personagens icônicos ao longo do anime de Yu-Gi-Oh!.",
+    "empty": "Nenhum deck ainda.",
+    "cardCount": "{count} cartas",
+    "backToDecks": "← voltar para decks do anime",
+    "mainDeck": "Deck Principal",
+    "extraDeck": "Deck Extra",
+    "series": "Série",
+    "season": "Temporada"
   },
   "footer": {
     "disclaimer": "Projeto de fã não oficial. Yu-Gi-Oh! é uma marca registrada da Konami.",

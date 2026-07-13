@@ -8,6 +8,7 @@
     "showcase": "ショーケース",
     "collection": "コレクション",
     "banlist": "禁止・制限リスト",
+    "decks": "アニメデッキ",
     "login": "ログイン"
   },
   "search": {
@@ -28,7 +29,8 @@
     "linksTitle": "カタログを探索",
     "linkShowcaseDesc": "厳選されたハイライトと人気カードをご覧ください。",
     "linkCollectionDesc": "自分のコレクションのカードをすべて管理。",
-    "linkBanlistDesc": "最新の禁止・制限リストの更新を確認。"
+    "linkBanlistDesc": "最新の禁止・制限リストの更新を確認。",
+    "linkDecksDesc": "アニメに登場したキャラクターたちのデッキを振り返る。"
   },
   "filters": {
     "title": "フィルター",
@@ -115,6 +117,17 @@
     "alert": "禁止・制限リスト",
     "alertMessage": "現在TCGで{count}枚のカードが禁止または制限されています。",
     "alertLink": "リストを見る →"
+  },
+  "decks": {
+    "title": "アニメデッキ",
+    "subtitle": "遊戯王アニメに登場した象徴的なキャラクターたちが使用したデッキレシピ集。",
+    "empty": "デッキはまだありません。",
+    "cardCount": "{count}枚",
+    "backToDecks": "← アニメデッキに戻る",
+    "mainDeck": "メインデッキ",
+    "extraDeck": "エクストラデッキ",
+    "series": "シリーズ",
+    "season": "シーズン"
   },
   "footer": {
     "disclaimer": "非公式のファンプロジェクトです。遊戯王はコナミの商標です。",

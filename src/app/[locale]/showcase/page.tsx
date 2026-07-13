@@ -7,6 +7,7 @@ import { buildTypeGroups } from '@/lib/typeGroups';
 import CardPreview from '@/components/card/CardPreview';
 import CatalogFilters from '@/components/shared/CatalogFilters';
 import Pagination from '@/components/shared/Pagination';
+import SectionNav from '@/components/shared/SectionNav';
 
 export const dynamic = 'force-dynamic';
 
@@ -91,6 +92,7 @@ export default async function ShowcasePage({
     { href: '/showcase' as const, label: tNav('showcase'), active: true },
     { href: '/collection' as const, label: tNav('collection'), active: false },
     { href: '/banlist' as const, label: tNav('banlist'), active: false },
+    { href: '/decks' as const, label: tNav('decks'), active: false },
   ];
 
   return (
@@ -98,22 +100,7 @@ export default async function ShowcasePage({
 
       {/* Left Sidebar: Navigation + Filters */}
       <aside className="hidden lg:block space-y-8">
-        {/* Navigation */}
-        <nav className="space-y-0">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`block px-4 py-2.5 text-sm font-body no-underline transition-colors ${
-                link.active
-                  ? 'bg-brand-gold/10 text-brand-gold border-l-2 border-brand-gold font-semibold'
-                  : 'text-brand-text-dim hover:text-brand-text hover:bg-brand-surface/50 border-l-2 border-transparent'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <SectionNav links={navLinks} />
 
         {/* Filters */}
         <CatalogFilters

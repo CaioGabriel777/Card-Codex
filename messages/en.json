@@ -8,6 +8,7 @@
     "showcase": "Showcase",
     "collection": "Collection",
     "banlist": "Banlist",
+    "decks": "Anime Decks",
     "login": "Sign In"
   },
   "search": {
@@ -28,7 +29,8 @@
     "linksTitle": "Explore the Catalog",
     "linkShowcaseDesc": "Browse curated highlights and trending cards.",
     "linkCollectionDesc": "Track every card across your personal collection.",
-    "linkBanlistDesc": "Stay current with the latest Forbidden & Limited updates."
+    "linkBanlistDesc": "Stay current with the latest Forbidden & Limited updates.",
+    "linkDecksDesc": "Relive the decks iconic characters played throughout the anime."
   },
   "filters": {
     "title": "Filters",
@@ -115,6 +117,17 @@
     "alert": "Banlist",
     "alertMessage": "{count} cards are currently Forbidden or Limited in the TCG.",
     "alertLink": "View Banlist →"
+  },
+  "decks": {
+    "title": "Anime Decks",
+    "subtitle": "Curated decklists played by iconic characters throughout the Yu-Gi-Oh! anime.",
+    "empty": "No decks yet.",
+    "cardCount": "{count} cards",
+    "backToDecks": "← back to anime decks",
+    "mainDeck": "Main Deck",
+    "extraDeck": "Extra Deck",
+    "series": "Series",
+    "season": "Season"
   },
   "footer": {
     "disclaimer": "Unofficial fan project. Yu-Gi-Oh! is a trademark of Konami.",

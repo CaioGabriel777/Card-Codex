@@ -21,6 +21,8 @@ export const routing = defineRouting({
       'pt-BR': '/colecao',
     },
     '/banlist': '/banlist',
+    '/decks': '/decks',
+    '/decks/[slug]': '/decks/[slug]',
   },
 });
 

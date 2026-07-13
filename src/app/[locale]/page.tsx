@@ -43,6 +43,7 @@ export default async function HomePage({
     { href: '/showcase' as const, label: tNav('showcase'), desc: t('linkShowcaseDesc') },
     { href: '/collection' as const, label: tNav('collection'), desc: t('linkCollectionDesc') },
     { href: '/banlist' as const, label: tNav('banlist'), desc: t('linkBanlistDesc') },
+    { href: '/decks' as const, label: tNav('decks'), desc: t('linkDecksDesc') },
   ];
 
   return (
@@ -116,7 +117,7 @@ export default async function HomePage({
           {t('linksTitle')}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {exploreLinks.map((link) => (
             <Link key={link.href} href={link.href} className="block group h-full">
               <div className="bg-brand-surface-3 p-px clip-angle h-full transition-colors duration-300 group-hover:bg-brand-gold">

@@ -25,7 +25,9 @@ CardCodex is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, 
 - **Interactive Card Showcase:** Premium UI with holographic tilt effects (`CardTilt`) for an immersive experience.
 - **Instant Card Search:** Debounced typeahead in the header and homepage — start typing a card name (in any supported language) and matching cards appear with a thumbnail preview.
 - **Detailed Card Information:** Access complete stats, effects, pricing history, and community rulings.
-- **Working Showcase Filters:** Filter by card type, combinable with a full-text search query, all reflected in the URL.
+- **Working Showcase Filters:** Filter by card type/subtype, release year, and name, combinable and paginated, all reflected in the URL.
+- **Real Banlist:** TCG/OCG Forbidden/Limited/Semi-Limited lists with the same filters as the showcase, plus ban-status badges on card pages.
+- **Anime Decks:** Hand-curated decklists played by characters throughout the Yu-Gi-Oh! anime, linked to the real card catalog.
 - **Internationalization (i18n):** Full support for English (default), Japanese, and Portuguese (pt-BR) locales, with localized routes per language.
 - **Automated Data Sync:** Integrates with YGOPRODeck API utilizing a Stale-While-Revalidate pattern for up-to-date pricing and data.
 - **Dockerized Postgres + Production Image:** Postgres runs in Docker for local dev; a separate multi-stage `Dockerfile` builds an optimized standalone production image.
@@ -106,6 +108,7 @@ In the project directory, you can run the following scripts defined in `package.
 | `npm run db:generate` | Generates the Prisma Client |
 | `npm run db:seed` | Populates the database with a handful of hand-curated sample cards (with rulings) |
 | `npm run db:sync` | Syncs the **full** YGOPRODeck catalog (~14,000+ cards, EN/PT/JA) into the database |
+| `npm run db:seed:decks` | Populates hand-curated anime character decklists (run `db:sync` first) |
 | `npm run db:studio` | Opens Prisma Studio to view and edit database records |
 | `npm run docker:up` | Starts the local Postgres container |
 | `npm run docker:down` | Stops the local Postgres container |
@@ -121,6 +124,17 @@ npm run db:sync
 ```
 
 `prisma/sync.ts` pulls the entire YGOPRODeck database in 3 bulk requests (English, Portuguese, Japanese — ~14,000+ cards each) and upserts everything by `ygoprodeckId`. It's safe to re-run any time to pick up new card releases or corrections; it never touches rulings or deck-usage data, so anything seeded by hand survives a re-sync. Rulings and deck-usage stats aren't available from YGOPRODeck's API and stay empty for synced cards unless curated separately.
+
+## 🃏 Anime Decks
+
+`/decks` shows decklists actually played by characters in the Yu-Gi-Oh! anime (e.g. Yugi Muto's Season 1 deck). There's no API for this — it's hand-curated in `prisma/seedAnimeDecks.ts`, cross-referenced against wiki/community sources, then matched to real cards already in the database:
+
+```bash
+npm run db:sync         # cards must exist first
+npm run db:seed:decks
+```
+
+To add another deck, append a `DeckDefinition` to the `DECKS` array in `prisma/seedAnimeDecks.ts` and re-run the script — it upserts by slug and warns (without failing) about any card name it can't match.
 
 ## 🐳 Production Docker Image
 
