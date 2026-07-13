@@ -1,0 +1,42 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: card-codex-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-cardcodex}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env before deploying}@db:5432/${POSTGRES_DB:-cardcodex}?schema=public
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    depends_on:
+      db:
+        condition: service_healthy
+    # No bind mount: this runs the built `.next/standalone` output baked into
+    # the image, not `next dev`. Rebuild the image after code changes.
+
+  db:
+    image: postgres:16-alpine
+    container_name: card-codex-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cardcodex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env before deploying}
+      POSTGRES_DB: ${POSTGRES_DB:-cardcodex}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+
+# The `web` image ships only the traced runtime files (no Prisma CLI), so it
+# doesn't push/migrate the schema itself. Before first boot, apply the schema
+# from a machine pointed at this DATABASE_URL (using the same POSTGRES_USER/
+# POSTGRES_PASSWORD/POSTGRES_DB values set in .env):
+#   DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<db>?schema=public npx prisma db push

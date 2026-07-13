@@ -1,12 +1,39 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
+import { Link, getPathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import { getCards } from '@/lib/cards';
 import CardPreview from '@/components/card/CardPreview';
 import CardSearchInput from '@/components/search/CardSearchInput';
 
-export const dynamic = 'force-dynamic';
+// Revalidated periodically instead of rendered fresh on every request — the
+// featured cards/count don't need per-request freshness.
+export const revalidate = 60;
 
-export default async function HomePage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const languages = Object.fromEntries(
+    routing.locales.map((l) => [l, getPathname({ href: '/', locale: l })])
+  );
+
+  return {
+    alternates: {
+      canonical: getPathname({ href: '/', locale }),
+      languages,
+    },
+  };
+}
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = await getTranslations('home');
   const tNav = await getTranslations('nav');
 
@@ -35,7 +62,7 @@ export default async function HomePage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-brand-text-dim mb-12">
-            <span className="text-brand-gold">{t('statsCount', { count: total.toLocaleString() })}</span>
+            <span className="text-brand-gold">{t('statsCount', { count: total.toLocaleString(locale) })}</span>
             <span className="opacity-40">·</span>
             <span>{t('statsLocales')}</span>
             <span className="opacity-40">·</span>
@@ -76,7 +103,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredCards.map((card: any) => (
+            {featuredCards.map((card) => (
               <CardPreview key={card.id} card={card} />
             ))}
           </div>

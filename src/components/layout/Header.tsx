@@ -17,7 +17,10 @@ export default function Header() {
   const params = useParams();
 
   const switchLocale = (newLocale: string) => {
-    router.replace({ pathname, params } as any, { locale: newLocale });
+    router.replace(
+      { pathname, params } as Parameters<typeof router.replace>[0],
+      { locale: newLocale }
+    );
   };
 
   return (

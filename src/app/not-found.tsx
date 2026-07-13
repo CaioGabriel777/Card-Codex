@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import './globals.css';
+import { fontVariables } from '@/lib/fonts';
 
 export const metadata = {
   title: '404: Card Not Found | CardCodex',
@@ -12,15 +14,7 @@ export const metadata = {
  */
 export default function GlobalNotFound() {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={fontVariables}>
       <body className="bg-brand-bg text-brand-text font-body antialiased min-h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-gold opacity-5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -37,9 +31,9 @@ export default function GlobalNotFound() {
           <p className="font-body text-brand-text-dim mb-10">
             The page you&apos;re looking for has been banished to the Graveyard, moved, or never existed.
           </p>
-          <a href="/" className="btn-gold">
+          <Link href="/" className="btn-gold">
             Back to Home
-          </a>
+          </Link>
         </div>
       </body>
     </html>

@@ -30,6 +30,40 @@
     "linkCollectionDesc": "自分のコレクションのカードをすべて管理。",
     "linkBanlistDesc": "最新の禁止・制限リストの更新を確認。"
   },
+  "filters": {
+    "title": "フィルター",
+    "search": "カード名",
+    "searchPlaceholder": "名前で検索...",
+    "status": "分類",
+    "type": "タイプ",
+    "monster": "モンスター",
+    "spell": "魔法",
+    "trap": "罠",
+    "year": "発売年",
+    "yearAny": "すべての年",
+    "subtypes": {
+      "normal": "通常",
+      "effect": "効果",
+      "ritual": "儀式",
+      "fusion": "融合",
+      "synchro": "シンクロ",
+      "xyz": "エクシーズ",
+      "link": "リンク",
+      "spellNormal": "通常",
+      "quickPlay": "速攻",
+      "spellContinuous": "永続",
+      "field": "フィールド",
+      "equip": "装備",
+      "spellRitual": "儀式",
+      "trapNormal": "通常",
+      "trapContinuous": "永続",
+      "counter": "カウンター"
+    }
+  },
+  "pagination": {
+    "previous": "前へ",
+    "next": "次へ"
+  },
   "showcase": {
     "title": "注目ゾーン",
     "cardCount": "{total}枚中{count}枚",
@@ -38,13 +72,6 @@
       "popular": "人気",
       "recent": "新着",
       "meta": "メタ"
-    },
-    "filters": {
-      "title": "フィルター",
-      "type": "タイプ",
-      "monster": "モンスター",
-      "spell": "魔法",
-      "trap": "罠"
     }
   },
   "card": {
@@ -78,9 +105,16 @@
   },
   "banlist": {
     "title": "禁止・制限リスト",
-    "alert": "禁止・制限リスト · 2026年7月",
-    "alertMessage": "7月の更新で{count}枚のカードが制限されました。",
-    "alertLink": "変更を見る →"
+    "totalCount": "現在{count}枚のカードが制限中",
+    "formatTcg": "TCG",
+    "formatOcg": "OCG",
+    "forbidden": "禁止",
+    "limited": "制限",
+    "semiLimited": "準制限",
+    "emptySection": "このカテゴリにカードはありません。",
+    "alert": "禁止・制限リスト",
+    "alertMessage": "現在TCGで{count}枚のカードが禁止または制限されています。",
+    "alertLink": "リストを見る →"
   },
   "footer": {
     "disclaimer": "非公式のファンプロジェクトです。遊戯王はコナミの商標です。",

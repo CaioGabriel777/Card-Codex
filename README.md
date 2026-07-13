@@ -28,7 +28,7 @@ CardCodex is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, 
 - **Working Showcase Filters:** Filter by card type, combinable with a full-text search query, all reflected in the URL.
 - **Internationalization (i18n):** Full support for English (default), Japanese, and Portuguese (pt-BR) locales, with localized routes per language.
 - **Automated Data Sync:** Integrates with YGOPRODeck API utilizing a Stale-While-Revalidate pattern for up-to-date pricing and data.
-- **Dockerized Environment:** Fully containerized setup ensuring reproducible builds and a smooth developer experience.
+- **Dockerized Postgres + Production Image:** Postgres runs in Docker for local dev; a separate multi-stage `Dockerfile` builds an optimized standalone production image.
 
 ## 🛠️ Built With
 
@@ -46,11 +46,11 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-You need to have Docker and Docker Compose installed on your machine.
+You need Node.js 18+ and Docker (for the local Postgres database) installed on your machine.
 
-### Installation (Recommended via Docker)
+### Installation (Recommended: native Next.js + Dockerized Postgres)
 
-This is the recommended approach as it ensures all dependencies (like PostgreSQL) are isolated and match the production environment. It also comes pre-configured with hot-reloading.
+Running `next dev` natively (instead of inside a container) avoids the CPU and I/O overhead of bind-mounting the whole repo into Docker — on Windows/macOS this overhead can be severe enough to make hot-reload compile slowly and spike host CPU, since the dev server falls back to polling the filesystem through the container's virtualized mount. Only Postgres runs in Docker; Next.js runs directly on the host.
 
 1. Clone the repository
    ```bash
@@ -63,37 +63,33 @@ This is the recommended approach as it ensures all dependencies (like PostgreSQL
    cp .env.example .env
    ```
 
-3. Start the development environment
+3. Start the Postgres container
    ```bash
    npm run docker:up
    ```
 
-The application will now be running at `http://localhost:3000`. This command builds the image, starts the Postgres database, runs database migrations and seed scripts, and starts the Next.js development server.
+4. Install dependencies, push the Prisma schema, and seed sample data
+   ```bash
+   npm install
+   npm run db:push
+   npm run db:seed
+   ```
 
-To stop the containers, simply run:
+5. Start the Next.js dev server
+   ```bash
+   npm run dev
+   ```
+
+The application will now be running at `http://localhost:3000`.
+
+To stop the database container:
 ```bash
 npm run docker:down
 ```
 
-### Manual Installation (Local Node + Postgres)
+### Fully Dockerized Alternative
 
-If you prefer to run the application natively without Docker:
-
-1. Ensure you have a running PostgreSQL instance.
-2. Copy `.env.example` to `.env` and update the `DATABASE_URL` with your connection string.
-3. Install NPM packages:
-   ```bash
-   npm install
-   ```
-4. Push the Prisma schema to your database and run the seed script:
-   ```bash
-   npm run db:push
-   npm run db:seed
-   ```
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
+If you'd rather keep everything in containers (e.g. testing on Linux, or inside WSL2's own filesystem where bind mounts are fast), you can still run the app in Docker using the production image — see [Production Docker Image](#-production-docker-image) below. It builds and serves the app rather than running `next dev`, so there's no hot-reload; rebuild the image after code changes.
 
 ## 📜 Available Scripts
 
@@ -108,10 +104,38 @@ In the project directory, you can run the following scripts defined in `package.
 | `npm run db:push` | Pushes the Prisma schema state to the database |
 | `npm run db:migrate` | Creates and applies a new Prisma migration |
 | `npm run db:generate` | Generates the Prisma Client |
-| `npm run db:seed` | Populates the database with initial sample data |
+| `npm run db:seed` | Populates the database with a handful of hand-curated sample cards (with rulings) |
+| `npm run db:sync` | Syncs the **full** YGOPRODeck catalog (~14,000+ cards, EN/PT/JA) into the database |
 | `npm run db:studio` | Opens Prisma Studio to view and edit database records |
-| `npm run docker:up` | Boots up the entire Docker stack (Postgres + Next.js dev server) |
-| `npm run docker:down` | Tears down the Docker stack |
+| `npm run docker:up` | Starts the local Postgres container |
+| `npm run docker:down` | Stops the local Postgres container |
+| `npm run docker:prod:up` | Builds and starts the production image + Postgres via `docker-compose.prod.yml` |
+| `npm run docker:prod:down` | Tears down the production stack |
+
+## 🔄 Populating the Full Card Catalog
+
+`npm run db:seed` only loads 8 sample cards (with hand-written rulings, meant for local development/demos). To populate the real catalog:
+
+```bash
+npm run db:sync
+```
+
+`prisma/sync.ts` pulls the entire YGOPRODeck database in 3 bulk requests (English, Portuguese, Japanese — ~14,000+ cards each) and upserts everything by `ygoprodeckId`. It's safe to re-run any time to pick up new card releases or corrections; it never touches rulings or deck-usage data, so anything seeded by hand survives a re-sync. Rulings and deck-usage stats aren't available from YGOPRODeck's API and stay empty for synced cards unless curated separately.
+
+## 🐳 Production Docker Image
+
+`Dockerfile` is a multi-stage build that compiles the app with `next build` (using Next's [`standalone` output](https://nextjs.org/docs/app/api-reference/config/next-config-js/output)) and ships a minimal runtime image — no dev dependencies, no source-watching, no Prisma CLI. This is what you'd deploy, not what you develop against.
+
+Unlike the dev `docker-compose.yml`, this stack has no hardcoded database password. Set a real one in `.env` first — `docker-compose.prod.yml` refuses to start without it:
+```bash
+echo 'POSTGRES_PASSWORD=<a strong random value>' >> .env
+npm run docker:prod:up
+```
+
+Before the first boot, apply the Prisma schema to the target database (the runtime image intentionally doesn't bundle the Prisma CLI to stay small), using the same credentials you just set:
+```bash
+DATABASE_URL=postgresql://cardcodex:<your POSTGRES_PASSWORD>@localhost:5432/cardcodex?schema=public npx prisma db push
+```
 
 ## 🤝 Contributing
 

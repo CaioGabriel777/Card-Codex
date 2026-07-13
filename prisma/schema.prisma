@@ -19,7 +19,8 @@ model Card {
   descPt        String?  @db.Text
   descJa        String?  @db.Text
   type          String          // e.g. "Effect Monster", "Spell Card"
-  race          String          // e.g. "Dragon", "Warrior"
+  frameType     String?         // canonical subtype for filtering, e.g. "effect", "effect_pendulum", "spell"
+  race          String          // monster race (e.g. "Dragon") or spell/trap subtype (e.g. "Field", "Counter")
   attribute     String?         // e.g. "LIGHT", "DARK"
   atk           Int?
   def           Int?
@@ -30,6 +31,8 @@ model Card {
   imageSmallUrl String?
   cardSetCode   String?
   releaseDate   DateTime?
+  banTcg        String?         // "Forbidden" | "Limited" | "Semi-Limited", null if unrestricted
+  banOcg        String?
   lastSyncedAt  DateTime @default(now())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -40,6 +43,9 @@ model Card {
   @@index([archetype])
   @@index([type])
   @@index([rarity])
+  @@index([frameType])
+  @@index([banTcg])
+  @@index([banOcg])
 }
 
 /// A ruling or clarification for a specific card.

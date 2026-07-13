@@ -30,6 +30,40 @@
     "linkCollectionDesc": "Track every card across your personal collection.",
     "linkBanlistDesc": "Stay current with the latest Forbidden & Limited updates."
   },
+  "filters": {
+    "title": "Filters",
+    "search": "Card Name",
+    "searchPlaceholder": "Search by name...",
+    "status": "Classification",
+    "type": "Type",
+    "monster": "Monster",
+    "spell": "Spell",
+    "trap": "Trap",
+    "year": "Release Year",
+    "yearAny": "Any year",
+    "subtypes": {
+      "normal": "Normal",
+      "effect": "Effect",
+      "ritual": "Ritual",
+      "fusion": "Fusion",
+      "synchro": "Synchro",
+      "xyz": "XYZ",
+      "link": "Link",
+      "spellNormal": "Normal",
+      "quickPlay": "Quick-Play",
+      "spellContinuous": "Continuous",
+      "field": "Field",
+      "equip": "Equip",
+      "spellRitual": "Ritual",
+      "trapNormal": "Normal",
+      "trapContinuous": "Continuous",
+      "counter": "Counter"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "showcase": {
     "title": "Featured Zone",
     "cardCount": "{count} of {total} cards",
@@ -38,13 +72,6 @@
       "popular": "Most popular",
       "recent": "New releases",
       "meta": "Current meta"
-    },
-    "filters": {
-      "title": "Filters",
-      "type": "Type",
-      "monster": "Monster",
-      "spell": "Spell",
-      "trap": "Trap"
     }
   },
   "card": {
@@ -78,9 +105,16 @@
   },
   "banlist": {
     "title": "Banlist",
-    "alert": "Banlist · Jul 2026",
-    "alertMessage": "{count} cards from your inventory were limited in the July update.",
-    "alertLink": "View changes →"
+    "totalCount": "{count} cards currently restricted",
+    "formatTcg": "TCG",
+    "formatOcg": "OCG",
+    "forbidden": "Forbidden",
+    "limited": "Limited",
+    "semiLimited": "Semi-Limited",
+    "emptySection": "No cards in this category.",
+    "alert": "Banlist",
+    "alertMessage": "{count} cards are currently Forbidden or Limited in the TCG.",
+    "alertLink": "View Banlist →"
   },
   "footer": {
     "disclaimer": "Unofficial fan project. Yu-Gi-Oh! is a trademark of Konami.",

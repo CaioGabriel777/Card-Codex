@@ -1,11 +1,31 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import type { Metadata } from 'next';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
+import { fontVariables } from '@/lib/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  const t = await getTranslations({ locale, namespace: 'site' });
+
+  return {
+    title: { default: `${t('name')} — ${t('tagline')}`, template: `%s | ${t('name')}` },
+    description: t('description'),
+  };
 }
 
 export default async function LocaleLayout({
@@ -16,16 +36,20 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
+  // `[locale]` matches any single path segment, including requests that
+  // never went through the i18n middleware (e.g. /favicon.ico when no static
+  // favicon exists). Reject anything that isn't a real supported locale
+  // instead of rendering pages with a bogus locale value.
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
   setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-      </head>
+    <html lang={locale} className={fontVariables}>
       <body className="flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
           <Header />

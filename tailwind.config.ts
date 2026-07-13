@@ -25,9 +25,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['Cinzel', 'Georgia', 'serif'],
-        body: ['Public Sans', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'Fira Code', 'monospace'],
       },
     },
   },

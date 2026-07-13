@@ -30,6 +30,40 @@
     "linkCollectionDesc": "Acompanhe cada carta da sua coleção pessoal.",
     "linkBanlistDesc": "Fique por dentro das atualizações da Banlist."
   },
+  "filters": {
+    "title": "Filtros",
+    "search": "Nome da Carta",
+    "searchPlaceholder": "Buscar por nome...",
+    "status": "Classificação",
+    "type": "Tipo",
+    "monster": "Monstro",
+    "spell": "Magia",
+    "trap": "Armadilha",
+    "year": "Ano de Lançamento",
+    "yearAny": "Qualquer ano",
+    "subtypes": {
+      "normal": "Normal",
+      "effect": "Efeito",
+      "ritual": "Ritual",
+      "fusion": "Fusão",
+      "synchro": "Sincro",
+      "xyz": "XYZ",
+      "link": "Link",
+      "spellNormal": "Normal",
+      "quickPlay": "Rápida",
+      "spellContinuous": "Contínua",
+      "field": "Campo",
+      "equip": "Equipamento",
+      "spellRitual": "Ritual",
+      "trapNormal": "Normal",
+      "trapContinuous": "Contínua",
+      "counter": "Anulação"
+    }
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Próxima"
+  },
   "showcase": {
     "title": "Zona de Destaque",
     "cardCount": "{count} de {total} cartas",
@@ -38,13 +72,6 @@
       "popular": "Mais populares",
       "recent": "Lançamentos",
       "meta": "Meta atual"
-    },
-    "filters": {
-      "title": "Filtros",
-      "type": "Tipo",
-      "monster": "Monstro",
-      "spell": "Magia",
-      "trap": "Armadilha"
     }
   },
   "card": {
@@ -78,9 +105,16 @@
   },
   "banlist": {
     "title": "Banlist",
-    "alert": "Banlist · Jul 2026",
-    "alertMessage": "{count} cartas do seu inventário foram limitadas na atualização de julho.",
-    "alertLink": "Ver mudanças →"
+    "totalCount": "{count} cartas atualmente restritas",
+    "formatTcg": "TCG",
+    "formatOcg": "OCG",
+    "forbidden": "Proibidas",
+    "limited": "Limitadas",
+    "semiLimited": "Semi-Limitadas",
+    "emptySection": "Nenhuma carta nesta categoria.",
+    "alert": "Banlist",
+    "alertMessage": "{count} cartas estão atualmente Proibidas ou Limitadas no TCG.",
+    "alertLink": "Ver Banlist →"
   },
   "footer": {
     "disclaimer": "Projeto de fã não oficial. Yu-Gi-Oh! é uma marca registrada da Konami.",

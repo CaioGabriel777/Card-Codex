@@ -1,10 +1,36 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
-import { getCards } from '@/lib/cards';
+import { Link, getPathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { getCards, getBanlist } from '@/lib/cards';
+import { buildTypeGroups } from '@/lib/typeGroups';
 import CardPreview from '@/components/card/CardPreview';
-import ShowcaseFilters from '@/components/showcase/ShowcaseFilters';
+import CatalogFilters from '@/components/shared/CatalogFilters';
+import Pagination from '@/components/shared/Pagination';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'showcase' });
+  const languages = Object.fromEntries(
+    routing.locales.map((l) => [l, getPathname({ href: '/showcase', locale: l })])
+  );
+
+  return {
+    title: t('title'),
+    // Canonical ignores filter/pagination query params — those are variants
+    // of the same listing, not distinct pages worth indexing separately.
+    alternates: {
+      canonical: getPathname({ href: '/showcase', locale }),
+      languages,
+    },
+  };
+}
 
 export default async function ShowcasePage({
   params,
@@ -13,24 +39,52 @@ export default async function ShowcasePage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  await params;
+  const { locale } = await params;
   const search = await searchParams;
   const t = await getTranslations('showcase');
+  const tFilters = await getTranslations('filters');
+  const tPagination = await getTranslations('pagination');
   const tNav = await getTranslations('nav');
   const tBanlist = await getTranslations('banlist');
 
   // Parse search params for filters
   const page = Number(search.page) || 1;
   const types = typeof search.type === 'string' ? search.type.split(',').filter(Boolean) : [];
+  const subtypes = typeof search.subtype === 'string' ? search.subtype.split(',').filter(Boolean) : [];
   const query = typeof search.q === 'string' ? search.q : undefined;
+  const releaseYear = Number(search.year) || undefined;
+  const pageSize = 20;
 
-  const { cards, total } = await getCards({ page, type: types, search: query, pageSize: 9 });
+  const { cards, total } = await getCards({
+    page,
+    type: types,
+    subtype: subtypes,
+    search: query,
+    releaseYear,
+    pageSize,
+  });
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  const typeOptions = [
-    { value: 'Monster', label: t('filters.monster') },
-    { value: 'Spell', label: t('filters.spell') },
-    { value: 'Trap', label: t('filters.trap') },
-  ];
+  const banlist = await getBanlist('tcg');
+  const restrictedCount = banlist.forbidden.length + banlist.limited.length;
+
+  // Current filters (minus `page`) so pagination links preserve them.
+  const filterQuery: Record<string, string> = {};
+  if (types.length) filterQuery.type = types.join(',');
+  if (subtypes.length) filterQuery.subtype = subtypes.join(',');
+  if (query) filterQuery.q = query;
+  if (releaseYear) filterQuery.year = String(releaseYear);
+
+  const typeGroups = buildTypeGroups(tFilters);
+
+  // Cards have been released since 1999; include next year to cover
+  // pre-announced upcoming sets with a future releaseDate.
+  const FIRST_RELEASE_YEAR = 1999;
+  const lastYear = new Date().getFullYear() + 1;
+  const yearOptions = Array.from(
+    { length: lastYear - FIRST_RELEASE_YEAR + 1 },
+    (_, i) => lastYear - i
+  );
 
   // Nav links for the left sidebar
   const navLinks = [
@@ -62,10 +116,15 @@ export default async function ShowcasePage({
         </nav>
 
         {/* Filters */}
-        <ShowcaseFilters
-          filtersTitle={t('filters.title')}
-          typeLabel={t('filters.type')}
-          typeOptions={typeOptions}
+        <CatalogFilters
+          filtersTitle={tFilters('title')}
+          typeLabel={tFilters('type')}
+          typeGroups={typeGroups}
+          searchLabel={tFilters('search')}
+          searchPlaceholder={tFilters('searchPlaceholder')}
+          yearLabel={tFilters('year')}
+          yearAnyLabel={tFilters('yearAny')}
+          yearOptions={yearOptions}
         />
       </aside>
 
@@ -76,7 +135,7 @@ export default async function ShowcasePage({
             {t('title')}
           </h1>
           <span className="font-mono text-xs text-brand-text-dim">
-            {t('cardCount', { count: cards.length, total: total.toLocaleString() })}
+            {t('cardCount', { count: cards.length, total: total.toLocaleString(locale) })}
           </span>
         </div>
 
@@ -95,8 +154,8 @@ export default async function ShowcasePage({
 
         {/* Grid */}
         {cards.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            {cards.map((card: any) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {cards.map((card) => (
               <CardPreview key={card.id} card={card} />
             ))}
           </div>
@@ -105,6 +164,14 @@ export default async function ShowcasePage({
             {t('empty')}
           </div>
         )}
+
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          buildHref={(p) => ({ pathname: '/showcase', query: { ...filterQuery, page: String(p) } })}
+          previousLabel={tPagination('previous')}
+          nextLabel={tPagination('next')}
+        />
       </main>
 
       {/* Right Sidebar: Banlist & Listings */}
@@ -115,11 +182,11 @@ export default async function ShowcasePage({
             {tBanlist('alert')}
           </h3>
           <p className="text-[0.85rem] text-brand-text leading-snug mb-3">
-            {tBanlist('alertMessage', { count: 3 })}
+            {tBanlist('alertMessage', { count: restrictedCount })}
           </p>
-          <a href="#" className="text-[0.8rem] text-brand-red hover:text-red-400 transition-colors no-underline">
+          <Link href="/banlist" className="text-[0.8rem] text-brand-red hover:text-red-400 transition-colors no-underline">
             {tBanlist('alertLink')}
-          </a>
+          </Link>
         </div>
       </aside>
 

@@ -1,30 +1,68 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
+import { Link, getPathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import { getCardBySlug, getRelatedCards } from '@/lib/cards';
+import { formatAtkDef } from '@/lib/cardStats';
 import CardTilt from '@/components/card/CardTilt';
 import CardStatGrid from '@/components/card/CardStatGrid';
 import EffectText from '@/components/card/EffectText';
 import CardPreview from '@/components/card/CardPreview';
+import BanBadge from '@/components/card/BanBadge';
+import Pagination from '@/components/shared/Pagination';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }) {
-  const { slug } = await params;
+const BAN_STATUS_KEY: Record<string, 'forbidden' | 'limited' | 'semiLimited'> = {
+  Forbidden: 'forbidden',
+  Limited: 'limited',
+  'Semi-Limited': 'semiLimited',
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
   const card = await getCardBySlug(slug);
   if (!card) return {};
-  
+
+  const description = card.descEn.length > 160 ? card.descEn.slice(0, 157) + '...' : card.descEn;
+  const href = { pathname: '/card/[slug]' as const, params: { slug } };
+  const languages = Object.fromEntries(
+    routing.locales.map((l) => [l, getPathname({ href, locale: l })])
+  );
+
   return {
     title: card.nameEn,
-    description: card.descEn.substring(0, 160) + '...',
+    description,
+    alternates: {
+      canonical: getPathname({ href, locale }),
+      languages,
+    },
+    openGraph: {
+      title: card.nameEn,
+      description,
+      images: [card.imageUrl],
+    },
+    twitter: {
+      images: [card.imageUrl],
+    },
   };
 }
 
 export default async function CardDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { locale, slug } = await params;
+  const search = await searchParams;
   const t = await getTranslations('card');
+  const tPagination = await getTranslations('pagination');
+  const tBanlist = await getTranslations('banlist');
   const card = await getCardBySlug(slug);
 
   if (!card) {
@@ -39,7 +77,13 @@ export default async function CardDetailPage({
       ? card.nameJa
       : card.nameEn;
 
-  const relatedCards = await getRelatedCards(card.archetype, card.id, 4);
+  const relatedPage = Number(search.page) || 1;
+  const relatedPageSize = 12;
+  const { cards: relatedCards, total: relatedTotal } = await getRelatedCards(card.archetype, card.id, {
+    page: relatedPage,
+    pageSize: relatedPageSize,
+  });
+  const relatedTotalPages = Math.max(1, Math.ceil(relatedTotal / relatedPageSize));
 
   return (
     <div className="container-max py-8">
@@ -66,8 +110,8 @@ export default async function CardDetailPage({
               <CardTilt imageUrl={card.imageUrl} alt={name} className="w-full" />
 
               <div className="mt-4 pt-3 border-t border-brand-border flex justify-between font-mono text-[0.75rem] text-brand-text-dim">
-                {card.atk !== null && <span className="text-brand-gold">ATK {card.atk}</span>}
-                {card.def !== null && <span>DEF {card.def}</span>}
+                {card.atk !== null && <span className="text-brand-gold">ATK {formatAtkDef(card.atk)}</span>}
+                {card.def !== null && <span>DEF {formatAtkDef(card.def)}</span>}
               </div>
             </div>
           </div>
@@ -90,6 +134,16 @@ export default async function CardDetailPage({
                 {t('releaseDate', { date: card.releaseDate.toLocaleDateString(locale) })}
               </p>
             )}
+            {(card.banTcg || card.banOcg) && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {card.banTcg && (
+                  <BanBadge status={card.banTcg} label={tBanlist(BAN_STATUS_KEY[card.banTcg])} formatLabel="TCG" />
+                )}
+                {card.banOcg && (
+                  <BanBadge status={card.banOcg} label={tBanlist(BAN_STATUS_KEY[card.banOcg])} formatLabel="OCG" />
+                )}
+              </div>
+            )}
           </div>
 
           <CardStatGrid card={card} />
@@ -103,7 +157,7 @@ export default async function CardDetailPage({
             </h3>
             <div className="space-y-4">
               {card.rulings.length > 0 ? (
-                card.rulings.map((r: any) => (
+                card.rulings.map((r) => (
                   <div key={r.id} className="flex gap-3 text-[0.85rem]">
                     <span className="font-mono text-brand-gold text-[0.7rem] shrink-0 mt-0.5">
                       {String(r.index).padStart(2, '0')}
@@ -130,11 +184,23 @@ export default async function CardDetailPage({
               {t('archetype', { name: card.archetype ?? '' })}
             </span>
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {relatedCards.map((rel: any) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+            {relatedCards.map((rel) => (
               <CardPreview key={rel.id} card={rel} />
             ))}
           </div>
+
+          <Pagination
+            currentPage={relatedPage}
+            totalPages={relatedTotalPages}
+            buildHref={(p) => ({
+              pathname: '/card/[slug]',
+              params: { slug },
+              query: { page: String(p) },
+            })}
+            previousLabel={tPagination('previous')}
+            nextLabel={tPagination('next')}
+          />
         </div>
       )}
 
@@ -145,7 +211,7 @@ export default async function CardDetailPage({
             {t('decksUsing')}
           </h3>
           <div className="space-y-2">
-            {card.deckUsages.map((deck: any, i: number) => (
+            {card.deckUsages.map((deck, i) => (
               <div key={deck.id} className="flex items-center gap-4 px-4 py-3 bg-brand-inset clip-angle-btn">
                 <span className="font-mono text-[0.7rem] text-brand-text-dim w-6 shrink-0">#{i + 1}</span>
                 <span className="flex-1 text-sm font-medium text-brand-text min-w-0 truncate">{deck.deckName}</span>

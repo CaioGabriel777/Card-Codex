@@ -26,6 +26,11 @@ export interface YGOCard {
     set_rarity_code: string;
     set_price: string;
   }>;
+  banlist_info?: {
+    ban_tcg?: string;
+    ban_ocg?: string;
+    ban_goat?: string;
+  };
   card_images: Array<{
     id: number;
     image_url: string;

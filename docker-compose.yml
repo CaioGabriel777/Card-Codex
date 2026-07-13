@@ -1,31 +1,9 @@
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: card-codex-web
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      # Points at the `db` service, not `.env`'s localhost URL (which is only
-      # correct for running Next.js outside Docker).
-      - DATABASE_URL=postgresql://cardcodex:cardcodex123@db:5432/cardcodex?schema=public
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      # Bind-mount the source so file edits on the host reach the container's
-      # `next dev` file watcher for hot reload.
-      - .:/app
-      # Anonymous volumes so the host's node_modules/.next (built for Windows)
-      # never shadow the Linux ones generated inside the image.
-      - /app/node_modules
-      - /app/.next
-    command: sh -c "npx prisma db push && npx tsx prisma/seed.ts && npm run dev"
-
+  # Only Postgres runs in Docker for local dev. Running the Next.js dev server
+  # natively (see README) avoids the CPU/IO overhead of bind-mounting the repo
+  # into a container on Windows/macOS (chokidar polling + gRPC-fuse/WSL2 file
+  # translation). For a containerized app image, see Dockerfile + the
+  # `docker compose -f docker-compose.prod.yml` stack.
   db:
     image: postgres:16-alpine
     container_name: card-codex-db
