@@ -8,8 +8,7 @@
     "showcase": "Vitrine",
     "collection": "Coleção",
     "banlist": "Banlist",
-    "decks": "Decks do Anime",
-    "login": "Entrar"
+    "decks": "Decks do Anime"
   },
   "search": {
     "placeholder": "Buscar carta ou coleção...",
@@ -65,6 +64,16 @@
   "pagination": {
     "previous": "Anterior",
     "next": "Próxima"
+  },
+  "auth": {
+    "signIn": "Entrar com Google",
+    "signOut": "Sair",
+    "signInPrompt": "Entre para montar seus próprios decks."
+  },
+  "deckFormat": {
+    "free": "Livre",
+    "tcg": "TCG",
+    "ocg": "OCG"
   },
   "showcase": {
     "title": "Zona de Destaque",
@@ -128,6 +137,36 @@
     "extraDeck": "Deck Extra",
     "series": "Série",
     "season": "Temporada"
+  },
+  "collection": {
+    "title": "Meus Decks",
+    "subtitle": "Monte seus próprios decks com qualquer carta do catálogo.",
+    "newDeck": "Novo Deck",
+    "deckNamePlaceholder": "Nome do deck",
+    "createButton": "Criar",
+    "empty": "Você ainda não criou nenhum deck.",
+    "ownerLabel": "Deck de {name}",
+    "share": "Copiar Link",
+    "shareCopied": "Link copiado!",
+    "rename": "Renomear",
+    "delete": "Excluir",
+    "deleteConfirm": "Excluir este deck? Essa ação não pode ser desfeita.",
+    "signInCta": "Entrar com Google",
+    "backToCollection": "← voltar para meus decks",
+    "emptyDeck": "Ainda sem cartas — navegue pela vitrine e use o botão + em qualquer carta para adicioná-la aqui."
+  },
+  "addToDeck": {
+    "button": "Adicionar ao Deck",
+    "chooseDeck": "Escolha um deck",
+    "newDeck": "+ Novo Deck",
+    "createPrompt": "Nomeie seu primeiro deck",
+    "namePlaceholder": "Nome do deck",
+    "create": "Criar e Adicionar",
+    "added": "Adicionado!",
+    "errorForbidden": "Proibida neste formato",
+    "errorMaxCopies": "Limite de cópias atingido",
+    "errorExtraDeckFull": "Deck Extra cheio (15)",
+    "errorGeneric": "Não foi possível adicionar"
   },
   "footer": {
     "disclaimer": "Projeto de fã não oficial. Yu-Gi-Oh! é uma marca registrada da Konami.",

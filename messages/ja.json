@@ -8,8 +8,7 @@
     "showcase": "ショーケース",
     "collection": "コレクション",
     "banlist": "禁止・制限リスト",
-    "decks": "アニメデッキ",
-    "login": "ログイン"
+    "decks": "アニメデッキ"
   },
   "search": {
     "placeholder": "カード、セットを検索...",
@@ -65,6 +64,16 @@
   "pagination": {
     "previous": "前へ",
     "next": "次へ"
+  },
+  "auth": {
+    "signIn": "Googleでログイン",
+    "signOut": "ログアウト",
+    "signInPrompt": "ログインして自分だけのデッキを作ろう。"
+  },
+  "deckFormat": {
+    "free": "フリー",
+    "tcg": "TCG",
+    "ocg": "OCG"
   },
   "showcase": {
     "title": "注目ゾーン",
@@ -128,6 +137,36 @@
     "extraDeck": "エクストラデッキ",
     "series": "シリーズ",
     "season": "シーズン"
+  },
+  "collection": {
+    "title": "マイデッキ",
+    "subtitle": "カタログの全てのカードから自分だけのデッキを作ろう。",
+    "newDeck": "新しいデッキ",
+    "deckNamePlaceholder": "デッキ名",
+    "createButton": "作成",
+    "empty": "まだデッキがありません。",
+    "ownerLabel": "{name}のデッキ",
+    "share": "リンクをコピー",
+    "shareCopied": "コピーしました！",
+    "rename": "名前を変更",
+    "delete": "削除",
+    "deleteConfirm": "このデッキを削除しますか？元に戻せません。",
+    "signInCta": "Googleでログイン",
+    "backToCollection": "← マイデッキに戻る",
+    "emptyDeck": "まだカードがありません。ショーケースを見て、カードの+ボタンで追加しましょう。"
+  },
+  "addToDeck": {
+    "button": "デッキに追加",
+    "chooseDeck": "デッキを選択",
+    "newDeck": "+ 新しいデッキ",
+    "createPrompt": "最初のデッキに名前を付けよう",
+    "namePlaceholder": "デッキ名",
+    "create": "作成して追加",
+    "added": "追加しました！",
+    "errorForbidden": "このフォーマットでは禁止",
+    "errorMaxCopies": "上限枚数に達しました",
+    "errorExtraDeckFull": "エクストラデッキが満杯です（15枚）",
+    "errorGeneric": "追加できませんでした"
   },
   "footer": {
     "disclaimer": "非公式のファンプロジェクトです。遊戯王はコナミの商標です。",

@@ -8,8 +8,7 @@
     "showcase": "Showcase",
     "collection": "Collection",
     "banlist": "Banlist",
-    "decks": "Anime Decks",
-    "login": "Sign In"
+    "decks": "Anime Decks"
   },
   "search": {
     "placeholder": "Search cards or sets...",
@@ -65,6 +64,16 @@
   "pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "auth": {
+    "signIn": "Sign in with Google",
+    "signOut": "Sign out",
+    "signInPrompt": "Sign in to build your own decks."
+  },
+  "deckFormat": {
+    "free": "Free",
+    "tcg": "TCG",
+    "ocg": "OCG"
   },
   "showcase": {
     "title": "Featured Zone",
@@ -128,6 +137,36 @@
     "extraDeck": "Extra Deck",
     "series": "Series",
     "season": "Season"
+  },
+  "collection": {
+    "title": "My Decks",
+    "subtitle": "Build your own decks from any card in the catalog.",
+    "newDeck": "New Deck",
+    "deckNamePlaceholder": "Deck name",
+    "createButton": "Create",
+    "empty": "You haven't built any decks yet.",
+    "ownerLabel": "Deck by {name}",
+    "share": "Copy Link",
+    "shareCopied": "Link copied!",
+    "rename": "Rename",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this deck? This can't be undone.",
+    "signInCta": "Sign in with Google",
+    "backToCollection": "← back to my decks",
+    "emptyDeck": "No cards yet — browse the showcase and use the + button on any card to add it here."
+  },
+  "addToDeck": {
+    "button": "Add to Deck",
+    "chooseDeck": "Choose a deck",
+    "newDeck": "+ New Deck",
+    "createPrompt": "Name your first deck",
+    "namePlaceholder": "Deck name",
+    "create": "Create & Add",
+    "added": "Added!",
+    "errorForbidden": "Forbidden in this format",
+    "errorMaxCopies": "Max copies reached",
+    "errorExtraDeckFull": "Extra Deck is full (15)",
+    "errorGeneric": "Couldn't add card"
   },
   "footer": {
     "disclaimer": "Unofficial fan project. Yu-Gi-Oh! is a trademark of Konami.",

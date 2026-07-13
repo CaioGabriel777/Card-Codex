@@ -1,12 +1,15 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { Link, useRouter, usePathname } from '@/i18n/navigation';
 import CardSearchInput from '@/components/search/CardSearchInput';
 
 /**
- * Site header with logo, search bar and locale switcher.
+ * Site header with logo, search bar, locale switcher, and account menu.
  * Tailwind v4 version matching the prototype's dark obsidian header with gold accents.
  */
 export default function Header() {
@@ -15,6 +18,20 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
+  const { data: session, status } = useSession();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
 
   const switchLocale = (newLocale: string) => {
     router.replace(
@@ -55,9 +72,54 @@ export default function Header() {
               </button>
             ))}
           </div>
-          <button className="px-4 py-1.5 bg-transparent border border-brand-border text-brand-text text-[0.85rem] cursor-pointer transition-colors duration-200 clip-angle-sm hover:border-brand-gold hover:text-brand-gold">
-            {t('nav.login')}
-          </button>
+          {status === 'authenticated' && session.user ? (
+            <div ref={menuRef} className="relative">
+              <button
+                onClick={() => setMenuOpen((open) => !open)}
+                className="flex items-center gap-2 px-2 py-1 bg-transparent border border-transparent text-brand-text text-[0.85rem] cursor-pointer transition-colors duration-200 hover:border-brand-border"
+              >
+                {session.user.image ? (
+                  <Image
+                    src={session.user.image}
+                    alt=""
+                    width={26}
+                    height={26}
+                    className="rounded-full border border-brand-border"
+                  />
+                ) : (
+                  <span className="w-[26px] h-[26px] flex items-center justify-center rounded-full bg-brand-surface-3 text-brand-gold text-xs font-bold">
+                    {session.user.name?.[0]?.toUpperCase() ?? '?'}
+                  </span>
+                )}
+                <span className="hidden md:inline max-w-[100px] truncate">{session.user.name}</span>
+              </button>
+
+              {menuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-44 bg-brand-surface-2 border border-brand-border clip-angle-sm shadow-2xl z-50 overflow-hidden">
+                  <Link
+                    href="/collection"
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-4 py-2.5 text-[0.85rem] text-brand-text no-underline hover:bg-brand-surface-3 transition-colors"
+                  >
+                    {t('nav.collection')}
+                  </Link>
+                  <button
+                    onClick={() => signOut()}
+                    className="w-full text-left px-4 py-2.5 text-[0.85rem] text-brand-text-dim hover:bg-brand-surface-3 hover:text-brand-text transition-colors cursor-pointer"
+                  >
+                    {t('auth.signOut')}
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => signIn('google')}
+              className="px-4 py-1.5 bg-transparent border border-brand-border text-brand-text text-[0.85rem] cursor-pointer transition-colors duration-200 clip-angle-sm hover:border-brand-gold hover:text-brand-gold"
+            >
+              {t('auth.signIn')}
+            </button>
+          )}
         </div>
       </div>
     </header>

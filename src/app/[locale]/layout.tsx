@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/lib/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SessionProvider from '@/components/providers/SessionProvider';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -52,11 +53,13 @@ export default async function LocaleLayout({
     <html lang={locale} className={fontVariables}>
       <body className="flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1" style={{ paddingTop: 'var(--header-height)' }}>
-            {children}
-          </main>
-          <Footer />
+          <SessionProvider>
+            <Header />
+            <main className="flex-1" style={{ paddingTop: 'var(--header-height)' }}>
+              {children}
+            </main>
+            <Footer />
+          </SessionProvider>
         </NextIntlClientProvider>
       </body>
     </html>

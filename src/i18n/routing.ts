@@ -20,6 +20,11 @@ export const routing = defineRouting({
       ja: '/collection',
       'pt-BR': '/colecao',
     },
+    '/collection/[slug]': {
+      en: '/collection/[slug]',
+      ja: '/collection/[slug]',
+      'pt-BR': '/colecao/[slug]',
+    },
     '/banlist': '/banlist',
     '/decks': '/decks',
     '/decks/[slug]': '/decks/[slug]',

@@ -28,6 +28,7 @@ CardCodex is a comprehensive Yu-Gi-Oh! card catalog designed to provide a rich, 
 - **Working Showcase Filters:** Filter by card type/subtype, release year, and name, combinable and paginated, all reflected in the URL.
 - **Real Banlist:** TCG/OCG Forbidden/Limited/Semi-Limited lists with the same filters as the showcase, plus ban-status badges on card pages.
 - **Anime Decks:** Hand-curated decklists played by characters throughout the Yu-Gi-Oh! anime, linked to the real card catalog.
+- **Personal Deck Builder:** Sign in with Google to build your own Free/TCG/OCG decks from any card in the catalog — legality (copy limits, Main/Extra Deck placement) is enforced automatically, and every deck gets an unlisted shareable link.
 - **Internationalization (i18n):** Full support for English (default), Japanese, and Portuguese (pt-BR) locales, with localized routes per language.
 - **Automated Data Sync:** Integrates with YGOPRODeck API utilizing a Stale-While-Revalidate pattern for up-to-date pricing and data.
 - **Dockerized Postgres + Production Image:** Postgres runs in Docker for local dev; a separate multi-stage `Dockerfile` builds an optimized standalone production image.
@@ -135,6 +136,22 @@ npm run db:seed:decks
 ```
 
 To add another deck, append a `DeckDefinition` to the `DECKS` array in `prisma/seedAnimeDecks.ts` and re-run the script — it upserts by slug and warns (without failing) about any card name it can't match.
+
+## 🔑 Personal Deck Builder (Google Sign-In)
+
+`/collection` lets signed-in users build their own decks (Free/TCG/OCG legality enforced server-side) from any card in the catalog, via the "+" button that appears on card thumbnails on hover. Auth is [Auth.js](https://authjs.dev/) with the Google provider and the Prisma adapter (sessions/decks live in the same Postgres database as everything else).
+
+Out of the box, `.env` has **placeholder** Google credentials — sign-in is fully wired up (you can click through to Google's OAuth screen) but will fail after redirecting back, since the client ID/secret aren't real. To make it actually work:
+
+1. Create an OAuth Client ID (Web application) at the [Google Cloud Console credentials page](https://console.cloud.google.com/apis/credentials).
+2. Add an authorized redirect URI: `<your-site-url>/api/auth/callback/google` (e.g. `http://localhost:3000/api/auth/callback/google` for local dev).
+3. Set `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET` in `.env` (or your deployment's env vars) to the real values.
+4. Generate a real `AUTH_SECRET` if you haven't already:
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+   ```
+
+None of this needs code changes — it's read entirely from environment variables (see `.env.example`), so it deploys the same way on Vercel: add the three vars in the project's environment variable settings.
 
 ## 🐳 Production Docker Image
 

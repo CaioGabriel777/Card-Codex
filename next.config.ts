@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
         hostname: "images.ygoprodeck.com",
         pathname: "/images/cards_cropped/**",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone" as const,

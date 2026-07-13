@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { formatAtkDef } from '@/lib/cardStats';
+import AddToDeckButton from './AddToDeckButton';
 
 interface CardPreviewProps {
   card: Card;
@@ -30,6 +31,7 @@ export default function CardPreview({ card, className = '' }: CardPreviewProps) 
     >
       <div className="bg-brand-surface-3 p-px clip-angle h-full transition-colors duration-300 group-hover:bg-brand-gold">
         <div className="bg-brand-surface-2 clip-angle h-full flex flex-col p-3 transition-transform duration-300 group-hover:-translate-y-1 relative overflow-hidden">
+          <AddToDeckButton card={card} />
 
           {/* Card Image */}
           <div className="w-full aspect-[0.686] relative mb-3 rounded-sm overflow-hidden bg-brand-bg opacity-90 group-hover:opacity-100 transition-opacity">
